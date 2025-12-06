@@ -18,5 +18,5 @@ services:
     container_name: autocontenuemmabot
     volumes:
       
-./autocontenuemmabot/app
+./autocontenuemmabot:/app
 ./autocontenuemmabot/session:/app/session
