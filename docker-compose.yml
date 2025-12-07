@@ -1,3 +1,5 @@
+version: "3.9"
+
 x-bot-template: &bot-template
   restart: always
   working_dir: /app
@@ -17,6 +19,5 @@ services:
     build: ./autocontenuemmabot
     container_name: autocontenuemmabot
     volumes:
-      
-./autocontenuemmabot:/app
-./autocontenuemmabot/session:/app/session
+      - ./autocontenuemmabot:/app
+      - ./autocontenuemmabot/session:/app/session
