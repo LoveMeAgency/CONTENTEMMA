@@ -1,11 +1,11 @@
 version: "3.9"
 
 x-bot-template: &bot-template
-  restart: unless-stopped
+  restart: always
   working_dir: /app
-  command: ["python3", "-u", "bot.py"]
+  command: ["python", "-u", "bot.py"]
   environment:
-    TZ: Europe/Malta
+    TZ: Europe/Paris           # ajuste si besoin
     PYTHONUNBUFFERED: "1"
   logging:
     driver: json-file
@@ -16,27 +16,8 @@ x-bot-template: &bot-template
 services:
   autocontenuemmabot:
     <<: *bot-template
-    build: 
-      context: ./autocontenuemmabot
-      dockerfile: Dockerfile
+    build: ./autocontenuemmabot
     container_name: autocontenuemmabot
     volumes:
-      # Mount the entire app directory (read-only for code)
-      - ./autocontenuemmabot:/app:ro
-      # Mount database and session directories with write permissions
-      - autocontenuemmabot_database:/app/database
-      - autocontenuemmabot_session:/app/session
-    networks:
-      - contentemma_network
-
-# Named volumes for data persistence
-volumes:
-  autocontenuemmabot_database:
-    driver: local
-  autocontenuemmabot_session:
-    driver: local
-
-# Network for service isolation
-networks:
-  contentemma_network:
-    driver: bridge
+      - ./autocontenuemmabot:/app
+      - ./autocontenuemmabot/session:/app/session
